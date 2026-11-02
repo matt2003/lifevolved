@@ -1,15 +1,59 @@
 ---
 import Base from '../layouts/Base.astro';
 import { profile } from '../data/cv';
+import { dronePhotos } from '../data/media';
+import { printSetup } from '../data/media';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const cards = [
+  {
+    href: '/cv',
+    title: 'CV',
+    text: 'Experience, education and skills.',
+    img: '/cv-card.svg',
+    grad: 'linear-gradient(135deg, rgba(78,168,255,.22), rgba(124,92,255,.28))',
+    accent: '#4ea8ff',
+  },
+  {
+    href: '/drone',
+    title: 'Drone',
+    text: 'Aerial photos over Thasos, Greece.',
+    img: dronePhotos.length > 0 ? dronePhotos[0].src : undefined,
+    grad: 'linear-gradient(135deg, rgba(45,212,191,.22), rgba(78,168,255,.26))',
+    accent: '#2dd4bf',
+  },
+  {
+    href: '/printing',
+    title: '3D Printing',
+    text: 'The P1S and AMS, and code-assisted models.',
+    img: printSetup.photo,
+    grad: 'linear-gradient(135deg, rgba(244,63,94,.20), rgba(247,158,27,.24))',
+    accent: '#f47f5e',
+  },
+];
 ---
 <Base title="Home">
   <h1>{profile.name}</h1>
   <p class="muted">{profile.title} / {profile.tagline}</p>
   <p>{profile.summary}</p>
-  <div class="grid">
-    <a class="card" href={`${base}/cv`}><h3>CV</h3><p class="muted">Experience, education and skills.</p></a>
-    <a class="card" href={`${base}/drone`}><h3>Drone</h3><p class="muted">Aerial photos and videos.</p></a>
-    <a class="card" href={`${base}/printing`}><h3>3D Printing</h3><p class="muted">Things I have printed.</p></a>
+  <div class="grid home">
+    {cards.map(c => (
+      <a class="card home-card" style={`background-image:${c.img ? `url(${base}${c.img}), ` : ''}${c.grad}`} href={`${base}${c.href}`}>
+        <h3>{c.title}</h3>
+        <p>{c.text}</p>
+      </a>
+    ))}
   </div>
 </Base>
+
+<style>
+  .home { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
+  .home-card {
+    position: relative; min-height: 190px; display: flex; flex-direction: column;
+    background-size: cover; background-position: center;
+    border: 1px solid rgba(255,255,255,.08); transition: transform .25s, box-shadow .25s;
+  }
+  .home-card:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(0,0,0,.45); }
+  .home-card h3 { margin: .6rem 0 0; text-shadow: 0 1px 8px rgba(0,0,0,.8); }
+  .home-card p { margin: .2rem 0 0; text-shadow: 0 1px 8px rgba(0,0,0,.8); }
+  .go { margin-top: auto; font-size: .85rem; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; }
+</style>

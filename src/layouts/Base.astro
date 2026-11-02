@@ -15,7 +15,7 @@ const links = [['CV', '/cv'], ['Drone', '/drone'], ['3D Printing', '/printing']]
   </head>
   <body>
     <header>
-      <a class="brand" href={`${base}/`}>{profile.name}</a>
+      <a class="brand" href={`${base}/`}>Home</a>
       <nav>
         {links.map(([label, href]) => <a href={`${base}${href}`} class={path.startsWith(`${base}${href}`) ? 'active' : ''}>{label}</a>)}
       </nav>
