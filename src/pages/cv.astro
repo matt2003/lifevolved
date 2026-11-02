@@ -1,0 +1,110 @@
+---
+import Base from '../layouts/Base.astro';
+import { profile, experience, education, languages, platforms, otherSkills, hardware } from '../data/cv';
+---
+<Base title="CV">
+  <section class="cv-hero">
+    <div>
+      <h1>{profile.name}</h1>
+      <p class="role">{profile.title} <span class="muted">/ {profile.tagline}</span></p>
+      <p>{profile.summary}</p>
+      <p class="muted">{profile.location} &middot; <a href={`mailto:${profile.email}`}>{profile.email}</a></p>
+    </div>
+    <svg class="monogram" viewBox="0 0 200 200" role="img" aria-label="MM monogram">
+      <defs>
+        <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#4ea8ff" />
+          <stop offset="1" stop-color="#7c5cff" />
+        </linearGradient>
+      </defs>
+      <circle cx="100" cy="100" r="92" fill="none" stroke="url(#g1)" stroke-width="3" stroke-dasharray="4 8" />
+      <circle cx="100" cy="100" r="72" fill="#181b22" stroke="url(#g1)" stroke-width="3" />
+      <text x="100" y="116" text-anchor="middle" font-size="52" font-weight="700" fill="url(#g1)" font-family="system-ui, sans-serif">MM</text>
+    </svg>
+  </section>
+
+  <h2>Technical expertise</h2>
+  <div class="grid">
+    {platforms.map(p => (
+      <div class="card">
+        <div class="badge">{p.icon}</div>
+        <h3>{p.platform}</h3>
+        <p><span class="muted">Languages</span><br />{p.languages}</p>
+        <p><span class="muted">Frameworks &amp; tools</span><br />{p.tools}</p>
+      </div>
+    ))}
+  </div>
+  {otherSkills.map(g => (
+    <div class="skillrow">
+      <span class="muted label">{g.label}</span>
+      <span>{g.items.map(i => <span class="tag">{i}</span>)}</span>
+    </div>
+  ))}
+  <h3>Hardware</h3>
+  <p>{hardware.map(h => <span class="tag">{h}</span>)}</p>
+
+  <h2>Experience</h2>
+  <ol class="timeline">
+    {experience.map(e => (
+      <li>
+        <div class="card">
+          <div class="head">
+            <div>
+              <strong>{e.role}</strong>
+              <div>{e.company} <span class="muted">&middot; {e.location}</span></div>
+            </div>
+            <span class="period">{e.period}</span>
+          </div>
+          <p>{e.tags.map(t => <span class="tag">{t}</span>)}</p>
+          {e.projects.map(p => (
+            <div>
+              {p.name && <h4>{p.name}</h4>}
+              <ul>{p.points.map(pt => <li>{pt}</li>)}</ul>
+            </div>
+          ))}
+        </div>
+      </li>
+    ))}
+  </ol>
+
+  <h2>Education</h2>
+  <div class="grid">
+    {education.map(e => (
+      <div class="card">
+        <strong>{e.course}</strong>
+        <div>{e.school}</div>
+        <div class="muted">{e.place} &middot; {e.period}</div>
+      </div>
+    ))}
+  </div>
+
+  <h2>Languages</h2>
+  <div class="card">
+    {languages.map(l => (
+      <div class="lang">
+        <span>{l.name} <span class="muted">({l.level})</span></span>
+        <div class="bar"><div style={`width:${l.pct}%`}></div></div>
+      </div>
+    ))}
+  </div>
+</Base>
+
+<style>
+  .cv-hero { display: flex; gap: 2rem; align-items: center; justify-content: space-between; flex-wrap: wrap; }
+  .cv-hero > div { flex: 1 1 360px; }
+  .role { font-size: 1.2rem; margin: 0; }
+  .monogram { width: 160px; height: 160px; }
+  .badge { display: inline-block; background: linear-gradient(135deg, #4ea8ff, #7c5cff); color: #0f1115; font-weight: 700; border-radius: 8px; padding: .2rem .6rem; font-size: .85rem; }
+  .skillrow { display: flex; gap: 1rem; margin: .5rem 0; flex-wrap: wrap; }
+  .skillrow .label { min-width: 190px; }
+  .timeline { list-style: none; margin: 0; padding: 0 0 0 1.5rem; border-left: 2px solid #262a33; }
+  .timeline > li { position: relative; margin-bottom: 1.2rem; }
+  .timeline > li::before { content: ''; position: absolute; left: calc(-1.5rem - 7px); top: 1.2rem; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); }
+  .head { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+  .period { color: var(--accent); white-space: nowrap; }
+  h4 { margin: .8rem 0 0; }
+  ul { margin: .4rem 0 0; padding-left: 1.2rem; }
+  .lang { margin: .6rem 0; }
+  .bar { background: #232733; border-radius: 99px; height: 8px; overflow: hidden; }
+  .bar div { background: linear-gradient(90deg, #4ea8ff, #7c5cff); height: 100%; }
+</style>

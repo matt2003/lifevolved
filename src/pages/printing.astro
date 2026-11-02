@@ -1,0 +1,48 @@
+---
+import Base from '../layouts/Base.astro';
+import { printSetup, printHighlights, printTools, printWorkflow } from '../data/media';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+<Base title="3D Printing">
+  <h1>3D Printing</h1>
+  <p class="muted">Turning code and ideas into physical things, one layer at a time.</p>
+
+  <section class="setup">
+    <img src={`${base}${printSetup.photo}`} alt={printSetup.alt} />
+    <div>
+      <h2>My setup</h2>
+      <p><span class="tag">{printSetup.printer}</span><span class="tag">{printSetup.ams}</span></p>
+      <div class="highlights">
+        {printHighlights.map(h => <div><h3>{h.title}</h3><p class="muted">{h.text}</p></div>)}
+      </div>
+    </div>
+  </section>
+
+  <h2>Code-assisted 3D modelling</h2>
+  <p>Designing models in code makes them parametric, repeatable and easy to keep in git. These are the tools I like to combine with the printer.</p>
+  <div class="grid">
+    {printTools.map(t => (
+      <a class="card" href={t.url}>
+        <span class="tag">{t.tag}</span>
+        <h3>{t.name}</h3>
+        <p class="muted">{t.text}</p>
+      </a>
+    ))}
+  </div>
+
+  <h2>From code to print</h2>
+  <ol class="flow">
+    {printWorkflow.map(s => <li>{s}</li>)}
+  </ol>
+</Base>
+
+<style>
+  .setup { display: grid; grid-template-columns: minmax(220px, 340px) 1fr; gap: 2rem; align-items: start; margin: 1.5rem 0; }
+  .setup img { width: 100%; border-radius: 12px; display: block; }
+  .setup h2 { margin-top: 0; }
+  .highlights h3 { margin: 1rem 0 0; }
+  .highlights p { margin: .2rem 0 0; }
+  .flow { padding-left: 1.4rem; }
+  .flow li { margin: .5rem 0; }
+  @media (max-width: 700px) { .setup { grid-template-columns: 1fr; } }
+</style>

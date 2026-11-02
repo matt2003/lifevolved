@@ -1,0 +1,15 @@
+---
+import Base from '../layouts/Base.astro';
+import { profile } from '../data/cv';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+<Base title="Home">
+  <h1>{profile.name}</h1>
+  <p class="muted">{profile.title} / {profile.tagline}</p>
+  <p>{profile.summary}</p>
+  <div class="grid">
+    <a class="card" href={`${base}/cv`}><h3>CV</h3><p class="muted">Experience, education and skills.</p></a>
+    <a class="card" href={`${base}/drone`}><h3>Drone</h3><p class="muted">Aerial photos and videos.</p></a>
+    <a class="card" href={`${base}/printing`}><h3>3D Printing</h3><p class="muted">Things I have printed.</p></a>
+  </div>
+</Base>

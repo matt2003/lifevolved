@@ -1,0 +1,28 @@
+:root { --bg:#0f1115; --card:#181b22; --text:#e8eaf0; --muted:#9aa0ad; --accent:#4ea8ff; }
+* { box-sizing: border-box; }
+body { margin:0; font-family: system-ui, sans-serif; background:var(--bg); color:var(--text); line-height:1.6; min-height:100vh; }
+body::before { content:''; position:fixed; inset:-20%; z-index:-1; pointer-events:none;
+  background:
+    radial-gradient(circle at 20% 25%, rgba(78,168,255,.28), transparent 45%),
+    radial-gradient(circle at 80% 20%, rgba(124,92,255,.26), transparent 45%),
+    radial-gradient(circle at 70% 80%, rgba(45,212,191,.20), transparent 45%),
+    radial-gradient(circle at 15% 85%, rgba(244,63,94,.16), transparent 45%);
+  background-size:140% 140%;
+  animation: drift 24s ease-in-out infinite alternate, hue 40s linear infinite; }
+@keyframes drift { 0% { transform:translate(0,0) rotate(0deg) scale(1); } 50% { transform:translate(4%,-3%) rotate(8deg) scale(1.08); } 100% { transform:translate(-4%,3%) rotate(-8deg) scale(1.15); } }
+@keyframes hue { from { filter:hue-rotate(0deg); } to { filter:hue-rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { body::before { animation:none; } }
+a { color:var(--accent); }
+header { backdrop-filter:blur(8px); display:flex; justify-content:space-between; align-items:center; padding:1rem 2rem; border-bottom:1px solid #262a33; flex-wrap:wrap; gap:.5rem; }
+header .brand { font-weight:700; color:var(--text); text-decoration:none; }
+nav a { margin-left:1.2rem; text-decoration:none; color:var(--muted); }
+nav a:hover, nav a.active { color:var(--accent); }
+main { max-width:1000px; margin:0 auto; padding:2rem; }
+footer { text-align:center; color:var(--muted); padding:2rem; }
+.grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:1rem; }
+.card { background:rgba(24,27,34,.78); backdrop-filter:blur(6px); border-radius:10px; overflow:hidden; padding:1rem; margin:0; display:block; text-decoration:none; color:var(--text); }
+.card img { height:200px; object-fit:cover; display:block; margin:-1rem -1rem .8rem; width:calc(100% + 2rem); }
+.video { position:relative; padding-top:56.25%; }
+.video iframe { position:absolute; inset:0; width:100%; height:100%; border:0; }
+.tag { display:inline-block; background:#232733; padding:.1rem .6rem; border-radius:99px; margin:.2rem; font-size:.85rem; }
+.muted { color:var(--muted); }

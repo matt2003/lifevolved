@@ -1,0 +1,26 @@
+---
+import '../styles/global.css';
+import { profile } from '../data/cv';
+const { title } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const path = Astro.url.pathname;
+const links = [['CV', '/cv'], ['Drone', '/drone'], ['3D Printing', '/printing']];
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title} | {profile.name}</title>
+  </head>
+  <body>
+    <header>
+      <a class="brand" href={`${base}/`}>{profile.name}</a>
+      <nav>
+        {links.map(([label, href]) => <a href={`${base}${href}`} class={path.startsWith(`${base}${href}`) ? 'active' : ''}>{label}</a>)}
+      </nav>
+    </header>
+    <main><slot /></main>
+    <footer>&copy; {new Date().getFullYear()} {profile.name}</footer>
+  </body>
+</html>
